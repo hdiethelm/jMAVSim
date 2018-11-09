@@ -26,6 +26,7 @@ public class SimpleSensors implements Sensors {
     private float noise_Acc = 0.05f;
     private float noise_Gyo = 0.01f;
     private float noise_Mag = 0.005f;
+    private float noise_Vis = 0.01f;
     private float noise_Prs = 0.01f;
     private double magScale = 2.0;   // scaling factor for mag sensor
     private float ephHigh = 100.0f;  // starting GPS horizontal estimation accuracy
@@ -139,6 +140,12 @@ public class SimpleSensors implements Sensors {
         rot.transform(mag);
         mag.scale(magScale);
         return addZeroMeanNoise(mag, noise_Mag);
+    }
+
+    @Override
+    public Vector3d getVisionPos() {
+        Vector3d pos = new Vector3d(object.getPosition());
+        return addZeroMeanNoise(pos, noise_Vis);
     }
 
     @Override

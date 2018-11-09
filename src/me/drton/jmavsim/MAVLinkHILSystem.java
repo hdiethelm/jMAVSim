@@ -249,6 +249,15 @@ public class MAVLinkHILSystem extends MAVLinkSystem {
             }
         }
 
+        //Vision
+        Vector3d pos_Vis = sensors.getVisionPos();
+        MAVLinkMessage msg_vis = new MAVLinkMessage(schema, "VISION_POSITION_ESTIMATE", sysId, componentId, protocolVersion);
+        msg_vis.set("usec", tu);
+        msg_vis.set("x", pos_Vis.x);
+        msg_vis.set("y", pos_Vis.y);
+        msg_vis.set("z", pos_Vis.z);
+        sendMessage(msg_vis);
+
         // SYSTEM TIME from host
         if (timeThrottleCounter++ % 1000 == 0) {
             MAVLinkMessage msg_system_time = new MAVLinkMessage(schema, "SYSTEM_TIME", sysId, componentId, protocolVersion);

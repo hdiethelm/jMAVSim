@@ -60,6 +60,13 @@ public class LogPlayerSensors implements Sensors {
     }
 
     @Override
+    public Vector3d getVisionPos() {
+        //ToDo: Fix
+        Vector3d pos = new Vector3d();
+        return pos;
+    }
+
+    @Override
     public double getPressureAlt() {
         return baroAlt;
     }

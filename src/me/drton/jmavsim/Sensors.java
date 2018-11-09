@@ -18,6 +18,8 @@ public interface Sensors {
 
     double getPressureAlt();
 
+    Vector3d getVisionPos();
+
     double getPressure();
 
     GNSSReport getGNSS();
