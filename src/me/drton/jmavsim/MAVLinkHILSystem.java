@@ -22,6 +22,7 @@ public class MAVLinkHILSystem extends MAVLinkSystem {
     private boolean gotHeartBeat = false;
     private boolean inited = false;
     private boolean stopped = false;
+    private boolean useGps = false;
     private long initTime = 0;
     private long initDelay = 500;
     private boolean gotHilActuatorControls =
@@ -228,7 +229,7 @@ public class MAVLinkHILSystem extends MAVLinkSystem {
         }
 
         // GPS
-        if (sensors.isGPSUpdated()) {
+        if (useGps && sensors.isGPSUpdated()) {
             GNSSReport gps = sensors.getGNSS();
             if (gps != null && gps.position != null && gps.velocity != null) {
                 MAVLinkMessage msg_gps = new MAVLinkMessage(schema, "HIL_GPS", sysId, componentId, protocolVersion);
