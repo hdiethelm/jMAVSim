@@ -26,7 +26,7 @@ public class SimpleSensors implements Sensors {
     private float noise_Acc = 0.05f;
     private float noise_Gyo = 0.01f;
     private float noise_Mag = 0.005f;
-    private float noise_Vis = 0.01f;
+    private float noise_Vis = 0.05f;
     private float noise_Prs = 0.01f;
     private double magScale = 2.0;   // scaling factor for mag sensor
     private float ephHigh = 100.0f;  // starting GPS horizontal estimation accuracy
@@ -241,6 +241,9 @@ public class SimpleSensors implements Sensors {
         else if ( name.equals("noise_Mag") ) {
             noise_Mag = value;
         }
+        else if ( name.equals("noise_Vis") ) {
+            noise_Vis = value;
+        }
         else if ( name.equals("noise_Prs") ) {
             noise_Prs = value;
         }
@@ -265,6 +268,9 @@ public class SimpleSensors implements Sensors {
         }
         else if ( name.equals("noise_Mag") ) {
             return noise_Mag;
+        }
+        else if ( name.equals("noise_Vis") ) {
+            return noise_Vis;
         }
         else if ( name.equals("noise_Prs") ) {
             return noise_Prs;

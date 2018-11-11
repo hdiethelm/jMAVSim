@@ -493,12 +493,14 @@ public class Visualizer3D extends JFrame {
         }
         else if (this.sensorParamPanel.isShowing()) {
             sensorParamPanel.setSensor(vehicleViewObject.getSensors());
+            sensorParamPanel.setHILSystem(hilSystem);
             sensorParamPanel.setVisible(false);
             propertySplitPane.setLeftComponent(null);
             propertySplitPane.setDividerSize(0);
         }
         else {
             sensorParamPanel.setSensor(vehicleViewObject.getSensors());
+            sensorParamPanel.setHILSystem(hilSystem);
             sensorParamPanel.setVisible(true);
             propertySplitPane.setLeftComponent(sensorParamPanel);
         }
