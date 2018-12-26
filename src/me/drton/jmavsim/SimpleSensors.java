@@ -26,6 +26,7 @@ public class SimpleSensors implements Sensors {
     private float noise_Acc = 0.05f;
     private float noise_Gyo = 0.01f;
     private float noise_Mag = 0.005f;
+    private float off_Mag = 0.0f;
     private float noise_Vis = 0.05f;
     private float noise_Prs = 0.01f;
     private double magScale = 2.0;   // scaling factor for mag sensor
@@ -96,6 +97,10 @@ public class SimpleSensors implements Sensors {
         this.noise_Mag = noise_Mag;
     }
 
+    public void setOff_Mag(float off_Mag) {
+        this.off_Mag = off_Mag;
+    }
+
     public void setNoise_Prs(float noise_Prs) {
         this.noise_Prs = noise_Prs;
     }
@@ -139,6 +144,9 @@ public class SimpleSensors implements Sensors {
         rot.transpose();
         rot.transform(mag);
         mag.scale(magScale);
+        Vector3d magTmp=mag;
+        mag.x = magTmp.x*Math.cos(off_Mag) - magTmp.y*Math.sin(off_Mag);
+        mag.y = magTmp.x*Math.sin(off_Mag) + magTmp.y*Math.cos(off_Mag);
         return addZeroMeanNoise(mag, noise_Mag);
     }
 
@@ -241,6 +249,9 @@ public class SimpleSensors implements Sensors {
         else if ( name.equals("noise_Mag") ) {
             noise_Mag = value;
         }
+        else if ( name.equals("off_Mag") ) {
+            off_Mag = value;
+        }
         else if ( name.equals("noise_Vis") ) {
             noise_Vis = value;
         }
@@ -268,6 +279,9 @@ public class SimpleSensors implements Sensors {
         }
         else if ( name.equals("noise_Mag") ) {
             return noise_Mag;
+        }
+        else if ( name.equals("off_Mag") ) {
+            return off_Mag;
         }
         else if ( name.equals("noise_Vis") ) {
             return noise_Vis;
