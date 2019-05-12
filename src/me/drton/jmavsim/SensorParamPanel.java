@@ -28,6 +28,7 @@ public class SensorParamPanel extends JPanel {
     private JSpinner massSpinner;
     private JCheckBox gpsCheck;
     private JCheckBox visCheck;
+    private JCheckBox visCheckDrift;
     
     protected Sensors sensors = null;
     protected MAVLinkHILSystem hilSystem = null;
@@ -124,6 +125,13 @@ public class SensorParamPanel extends JPanel {
                 hilSystem.setVision(enabled);
             }
         });
+        visCheckDrift.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                boolean enabled = visCheckDrift.isSelected();
+                hilSystem.setVisionDrift(enabled);
+            }
+        });
 
     }
 
@@ -152,6 +160,7 @@ public class SensorParamPanel extends JPanel {
         // init value
         gpsCheck.setSelected(hilSystem.isGPSEnabled());
         visCheck.setSelected(hilSystem.isVisionEnabled());
+        visCheckDrift.setSelected(hilSystem.isVisionDriftEnabled());
 
     }
 
@@ -171,7 +180,7 @@ public class SensorParamPanel extends JPanel {
      */
     private void $$$setupUI$$$() {
         mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayoutManager(13, 2, new Insets(0, 0, 0, 0), -1, -1));
+        mainPanel.setLayout(new GridLayoutManager(14, 2, new Insets(0, 0, 0, 0), -1, -1));
         
         final JLabel label0 = new JLabel();
         label0.setText("--- SENSORS ---");
@@ -244,6 +253,12 @@ public class SensorParamPanel extends JPanel {
         mainPanel.add(label10, new GridConstraints(12, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         visCheck = new JCheckBox();
         mainPanel.add(visCheck, new GridConstraints(12, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        
+        final JLabel label11 = new JLabel();
+        label11.setText("Vision Drift");
+        mainPanel.add(label11, new GridConstraints(13, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        visCheckDrift = new JCheckBox();
+        mainPanel.add(visCheckDrift, new GridConstraints(13, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
 }
 
     /**

@@ -24,6 +24,10 @@ public class MAVLinkHILSystem extends MAVLinkSystem {
     private boolean stopped = false;
     private boolean useGps = false;
     private boolean useVis = true;
+    private boolean useVisDrift = false;
+    private float visDriftX = 0.0f;
+    private float visDriftY = 0.0f;
+    private float visDriftZ = 0.0f;
     private long initTime = 0;
     private long initDelay = 500;
     private boolean gotHilActuatorControls =
@@ -135,12 +139,20 @@ public class MAVLinkHILSystem extends MAVLinkSystem {
         useVis = enabled;
     }
     
+    public void setVisionDrift(boolean enabled) {
+        useVisDrift = enabled;
+    }
+    
     public boolean isGPSEnabled() {
         return useGps;
     }
     
     public boolean isVisionEnabled() {
         return useVis;
+    }
+    
+    public boolean isVisionDriftEnabled() {
+        return useVisDrift;
     }
 
     public void initMavLink() {
@@ -272,9 +284,12 @@ public class MAVLinkHILSystem extends MAVLinkSystem {
             Vector3d pos_Vis = sensors.getVisionPos();
             MAVLinkMessage msg_vis = new MAVLinkMessage(schema, "VISION_POSITION_ESTIMATE", sysId, componentId, protocolVersion);
             msg_vis.set("usec", tu);
-            msg_vis.set("x", pos_Vis.x);
-            msg_vis.set("y", pos_Vis.y);
-            msg_vis.set("z", pos_Vis.z);
+            msg_vis.set("x", pos_Vis.x + visDriftX);
+            msg_vis.set("y", pos_Vis.y + visDriftY);
+            msg_vis.set("z", pos_Vis.z + visDriftZ);
+            if(useVisDrift) {
+                visDriftZ = visDriftZ + 0.01f;
+            }
             sendMessage(msg_vis);
         }
 
