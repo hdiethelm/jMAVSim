@@ -141,6 +141,11 @@ public class MAVLinkHILSystem extends MAVLinkSystem {
     
     public void setVisionDrift(boolean enabled) {
         useVisDrift = enabled;
+        if(!enabled) {
+            visDriftX = 0.0f;
+            visDriftY = 0.0f;
+            visDriftZ = 0.0f;
+        }
     }
     
     public boolean isGPSEnabled() {
